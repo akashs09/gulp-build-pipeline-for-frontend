@@ -98,15 +98,14 @@ gulp.task('compileSass', () => {
 
 /**************************************OTHER*********************************/
 
-
-//remove the dist folder
+//signature hash
 gulp.task('clean', () => del(destinations.server));
 
 gulp.task('build', ['clean'], (callback) => {
     runSeq(['images','icons','styles','scripts'], callback);
 });
 
-gulp.task('serve', [],() => {
+gulp.task('serve', ['build'],() => {
     browserSync.init({ server: { baseDir: destinations.server } });
 });
 
@@ -116,4 +115,4 @@ gulp.task('watch', ['serve'],() => {
     gulp.watch(sources.html, ['html']);
 });
 
-gulp.task('default', ['build','serve','watch']);
+gulp.task('default', ['watch']);
